@@ -1,0 +1,37 @@
+:global int current_step
+:global int current_package
+:global int museum_package_id
+:global int package_executing
+:global int turbo_counter
+:global int museumLaunch
+
+:global string element
+:global int targetTier
+:global int maxBuyTier
+
+:global int inventorySlot
+:global string elementInSlot
+
+:local int invSlot
+gotoif(done, freeSlots("equipped") == 0)
+invSlot = 0
+checkHigh:
+gotoif(move, tier("inventory", invSlot) >= targetTier)
+invSlot += 1
+gotoif(buycombineloop, invSlot >= 25)
+goto(checkHigh)
+move:
+move("inventory", invSlot, "equipped")
+goto(checkHigh)
+buycombineloop:
+buyMarket(element, maxBuyTier)
+combine(targetTier)
+gotoif(done, freeSlots("equipped") == 0)
+gotoif(targetReached, tier("inventory", 0) >= targetTier)
+goto(buycombineloop)
+targetReached:
+move("inventory", 0, "equipped")
+goto(buycombineloop)
+done:
+clear("inventory")
+wait(0.0)

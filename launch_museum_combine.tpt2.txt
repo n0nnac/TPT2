@@ -1,0 +1,13 @@
+:global int museumLaunch
+
+:global string element
+:global int targetTier
+:global int maxBuyTier
+
+element = "nature"
+targetTier = 20
+maxBuyTier = 15
+key.o()
+isopen("museum")
+museumLaunch=1
+wait(0.0)

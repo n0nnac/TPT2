@@ -1,0 +1,46 @@
+:global int current_step
+:global int current_package
+:global int museum_package_id
+:global int package_executing
+:global int turbo_counter
+:global int museumLaunch
+
+:global string element
+:global int targetTier
+:global int maxBuyTier
+
+:global int inventorySlot
+:global string elementInSlot
+
+
+begincycle:
+
+waituntil(current_step == 1 & current_package == museum_package_id)
+gotoif(skipmoving, isopen("museum") == false | freeSlots("inventory") != 24 | museumLaunch == 0)
+package_executing = 1
+museumLaunch = 0
+inventorySlot = -1
+inventoryLoop:
+inventorySlot += 1
+elementInSlot = element("equipped", inventorySlot)
+gotoif(move, element("equipped", inventorySlot) == element)
+gotoif(donemoving, inventorySlot >= 141)
+goto(inventoryLoop)
+move:
+move("equipped", inventorySlot, "inventory")
+goto(inventoryLoop)
+
+donemoving:
+package_executing = 0
+
+skipmoving:
+waituntil(current_step == 2 & current_package == museum_package_id)
+gotoif(skipactions, isopen("museum") == false | freeSlots("inventory") == 24)
+package_executing = 1
+fill(true)
+executesync("museum package 2")
+stop("museum package 2")
+package_executing = 0
+
+skipactions: 
+ goto(begincycle)
