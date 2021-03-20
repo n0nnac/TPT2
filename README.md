@@ -16,6 +16,7 @@ This consists of three variables
     * Set this to the element of the powerstones which you would like to level up
 2. `int targetTier`
     * Set this to the tier of stone which you would like to reach. Once stones reach this level or higher, they will be moved back into equipped
+    * You should not set this to more than maxBuyTier + 7, as there are not currenly enough inventory slots to go higher
 3. `int maxBuyTier`
     * Set this to the maximum tier of stone to purchace from the offshore market. This is used to prevent you from accidentally spending all of your cubes
     * Note: If the script moves all your stones but doesn't do anything else, make sure this is high enough to purchace from the market!
